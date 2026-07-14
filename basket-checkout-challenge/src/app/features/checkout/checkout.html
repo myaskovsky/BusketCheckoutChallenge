@@ -38,13 +38,26 @@
     </div>
 
     <div class="grand-total">
-      Total Price: <span data-testid="grand-total">{{ basket.totalCost() | currency }}</span>
+      Total Price:
+      <span data-testid="grand-total">{{ basket.totalCost() | currency }}</span>
     </div>
 
     <form class="payment" (submit)="placeOrder(); $event.preventDefault()">
       <div class="card-row">
         <label for="card-number">Input Your Card Number</label>
-        <app-card-number-input [formField]="cardField" [invalid]="showCardError()" />
+        <input
+          id="card-number"
+          class="card-input"
+          [class.invalid]="showCardError()"
+          [value]="cardDisplay()"
+          (input)="onCardInput($event)"
+          (blur)="markCardTouched()"
+          inputmode="numeric"
+          maxlength="19"
+          placeholder="1234 5678 9012 3456"
+          aria-describedby="card-error"
+          data-testid="card-number-input"
+        />
       </div>
       @if (showCardError()) {
         <span id="card-error" class="card-error" role="alert" data-testid="card-error">

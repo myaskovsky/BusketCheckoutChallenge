@@ -1,12 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
 
-/**
- * Playwright e2e configuration.
- *
- * The app is fully client-side (in-memory basket store, static public/products.json),
- * so no backend is required — Playwright just starts the Angular dev server.
- * All artifacts are written under e2e/test-output/, which is gitignored.
- */
 export default defineConfig({
   testDir: './e2e',
   outputDir: 'e2e/test-output/results',

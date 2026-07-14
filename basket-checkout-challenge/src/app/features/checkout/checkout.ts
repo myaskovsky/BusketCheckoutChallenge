@@ -1,15 +1,23 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { form, FormField, pattern, required } from '@angular/forms/signals';
+import { form, pattern, required } from '@angular/forms/signals';
 
 import { BasketService } from '@app/core/state';
 import { CheckoutItem } from './components/checkout-item/checkout-item';
-import { CardNumberInput } from './components/card-number-input/card-number-input';
+
+const CARD_DIGITS = 16;
+
+function mask(value: string): string {
+  return value
+    .replace(/\D/g, '')
+    .slice(0, CARD_DIGITS)
+    .replace(/(\d{4})(?=\d)/g, '$1 ');
+}
 
 @Component({
   selector: 'app-checkout',
-  imports: [CurrencyPipe, RouterLink, FormField, CheckoutItem, CardNumberInput],
+  imports: [CurrencyPipe, RouterLink, CheckoutItem],
   templateUrl: './checkout.html',
   styleUrl: './checkout.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -17,6 +25,8 @@ import { CardNumberInput } from './components/card-number-input/card-number-inpu
 export class Checkout {
   protected readonly basket = inject(BasketService);
   protected readonly orderPlaced = signal(false);
+
+  protected readonly cardDisplay = signal('');
 
   private readonly card = signal('');
   protected readonly cardField = form(this.card, (path) => {
@@ -28,16 +38,9 @@ export class Checkout {
     () => this.cardField().touched() && this.cardField().invalid(),
   );
 
-  protected readonly cardErrorMessage = computed(() => {
-    const errors = this.cardField().errors();
-    if (errors.some((error) => error.kind === 'required')) {
-      return 'Enter your card number';
-    }
-    if (errors.some((error) => error.kind === 'pattern')) {
-      return 'Card number must be 16 digits';
-    }
-    return '';
-  });
+  protected readonly cardErrorMessage = computed(
+    () => this.cardField().errors()[0]?.message ?? '',
+  );
 
   protected readonly canCheckout = computed(
     () => !this.basket.isEmpty() && this.cardField().valid(),
@@ -49,6 +52,18 @@ export class Checkout {
 
   protected removeAll(sku: string): void {
     this.basket.removeAll(sku);
+  }
+
+  protected onCardInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const masked = mask(input.value);
+    this.cardDisplay.set(masked);
+    input.value = masked;
+    this.card.set(masked.replace(/\D/g, ''));
+  }
+
+  protected markCardTouched(): void {
+    this.cardField().markAsTouched();
   }
 
   protected placeOrder(): void {
