@@ -73,6 +73,6 @@ test.describe('Checkout page', () => {
     await page.getByTestId('continue-shopping').click();
     await expect(page).toHaveURL(/\/products$/);
     // Order placement clears the in-memory basket:)
-    await expect(page.getByTestId('basket-summary-items')).toContainText('0 items');
+    await expect(page.getByTestId('basket-summary-items')).toContainText('Basket items: 0');
   });
 });

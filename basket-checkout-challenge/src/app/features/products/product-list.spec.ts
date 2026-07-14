@@ -56,6 +56,6 @@ describe('ProductList', () => {
     await fixture.whenStable();
 
     expect(store.totalItems()).toBe(1);
-    expect((fixture.nativeElement as HTMLElement).textContent).toContain('1 item');
+    expect((fixture.nativeElement as HTMLElement).textContent).toContain('Basket items: 1');
   });
 });

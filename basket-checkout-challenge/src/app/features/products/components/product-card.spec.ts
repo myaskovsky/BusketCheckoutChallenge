@@ -59,13 +59,13 @@ describe('ProductCard', () => {
     let removed = 0;
     fixture.componentInstance.remove.subscribe(() => removed++);
 
-    buttonByText(fixture, 'Remove Basket').click();
+    buttonByText(fixture, 'Remove from Basket').click();
 
     expect(removed).toBe(1);
   });
 
   it('disables the Remove Basket button when nothing is in the basket', () => {
-    expect(buttonByText(fixture, 'Remove Basket').disabled).toBe(true);
+    expect(buttonByText(fixture, 'Remove from Basket').disabled).toBe(true);
   });
 
   it('disables adding and shows a limit tooltip once the basket limit is reached', async () => {

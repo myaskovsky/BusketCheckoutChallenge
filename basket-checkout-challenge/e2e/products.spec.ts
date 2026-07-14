@@ -12,11 +12,11 @@ test.describe('Products page', () => {
   });
 
   test('adding a product updates the basket summary', async ({ page }) => {
-    await expect(page.getByTestId('basket-summary-items')).toContainText('0 items');
+    await expect(page.getByTestId('basket-summary-items')).toContainText('Basket items: 0');
 
     await addToBasket(page, PRODUCTS.kettle.sku, 2);
 
-    await expect(page.getByTestId('basket-summary-items')).toContainText('2 items');
+    await expect(page.getByTestId('basket-summary-items')).toContainText('Basket items: 2');
     await expect(page.getByTestId('basket-summary-total')).toContainText('84.00');
   });
 
@@ -25,10 +25,10 @@ test.describe('Products page', () => {
     await expect(grinder.getByTestId('remove-from-basket')).toBeDisabled();
 
     await addToBasket(page, PRODUCTS.grinder.sku, 2);
-    await expect(page.getByTestId('basket-summary-items')).toContainText('2 items');
+    await expect(page.getByTestId('basket-summary-items')).toContainText('Basket items: 2');
 
     await grinder.getByTestId('remove-from-basket').click();
-    await expect(page.getByTestId('basket-summary-items')).toContainText('1 item');
+    await expect(page.getByTestId('basket-summary-items')).toContainText('Basket items: 1');
     await expect(grinder.getByTestId('remove-from-basket')).toBeEnabled();
   });
 
@@ -37,12 +37,15 @@ test.describe('Products page', () => {
     await addToBasket(page, PRODUCTS.grinder.sku, PRODUCTS.grinder.limit);
 
     await expect(page.getByTestId('basket-summary-items')).toContainText(
-      `${PRODUCTS.grinder.limit} items`,
+      `Basket items: ${PRODUCTS.grinder.limit}`,
     );
     await expect(grinder.getByTestId('add-to-basket')).toBeDisabled();
 
-    await grinder.getByTestId('limit-tooltip').hover();
-    await expect(page.getByRole('tooltip')).toHaveText(
+    // The pointer already sits on the Add button after the clicks above, so a
+    // plain hover fires no fresh mouseenter. Dispatch it directly on the wrapper
+    // to open the Material tooltip (which has no role="tooltip", hence the class).
+    await grinder.getByTestId('limit-tooltip').dispatchEvent('mouseenter');
+    await expect(page.locator('.mat-mdc-tooltip')).toHaveText(
       `Limit of ${PRODUCTS.grinder.limit} reached`,
     );
   });
