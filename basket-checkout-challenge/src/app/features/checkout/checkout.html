@@ -1,0 +1,63 @@
+<nav class="topnav">
+  <span data-testid="item-count">Basket Items: {{ basket.totalItems() }}</span>
+</nav>
+
+<h1 data-testid="checkout-heading">Checkout</h1>
+
+<main>
+  @if (orderPlaced()) {
+    <div class="confirmation" data-testid="order-confirmation">
+      <div class="check">✓</div>
+      <h2>Thank you for your order</h2>
+      <p>Your payment was accepted and your order is on its way.</p>
+      <a class="btn btn-primary" routerLink="/products" data-testid="continue-shopping">Continue Shopping</a>
+    </div>
+  } @else if (basket.isEmpty()) {
+    <div class="empty" data-testid="empty-basket">
+      <p>Your basket is empty.</p>
+      <a class="btn btn-primary" routerLink="/products" data-testid="continue-shopping">Continue Shopping</a>
+    </div>
+  } @else {
+    <div class="table-wrap">
+      <div class="checkout-table">
+        <div class="thead">
+          <div class="th col-name">Product Name</div>
+          <div class="th">Selected Quantity</div>
+          <div class="th">Unit Price</div>
+          <div class="th">Total Price</div>
+          <div class="th"></div>
+        </div>
+        @for (item of basket.items(); track item.product.sku) {
+          <app-checkout-item
+            [item]="item"
+            (quantityChange)="updateQuantity(item.product.sku, $event)"
+            (removeAll)="removeAll(item.product.sku)"
+          />
+        }
+      </div>
+    </div>
+
+    <div class="grand-total">
+      Total Price: <span data-testid="grand-total">{{ basket.totalCost() | currency }}</span>
+    </div>
+
+    <form class="payment" (submit)="placeOrder(); $event.preventDefault()">
+      <div class="card-row">
+        <label for="card-number">Input Your Card Number</label>
+        <app-card-number-input [formField]="cardField" />
+      </div>
+      @if (showCardError()) {
+        <span id="card-error" class="card-error" role="alert" data-testid="card-error">
+          {{ cardField().errors()[0].message }}
+        </span>
+      }
+
+      <div class="actions">
+        <a class="btn btn-neutral" routerLink="/products" data-testid="continue-shopping">Continue Shopping</a>
+        <button class="btn btn-primary" type="submit" [disabled]="!canCheckout()" data-testid="checkout-submit">
+          Checkout
+        </button>
+      </div>
+    </form>
+  }
+</main>

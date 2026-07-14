@@ -1,0 +1,40 @@
+:host {
+  display: block;
+}
+
+.product-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1rem;
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  background: #fff;
+}
+
+.name {
+  flex: 0 0 10rem;
+  font-weight: 700;
+}
+
+.description {
+  flex: 1 1 16rem;
+  min-width: 0;
+}
+
+.price {
+  flex: 0 0 4rem;
+}
+
+.add-btn-wrap {
+  display: inline-flex;
+
+  // A disabled button swallows pointer events, so let the wrapper receive the
+  // hover that triggers the tooltip.
+  button:disabled {
+    pointer-events: none;
+  }
+}

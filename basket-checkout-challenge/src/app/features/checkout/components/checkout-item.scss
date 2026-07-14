@@ -1,0 +1,19 @@
+:host {
+  display: table-row;
+}
+
+.cell {
+  display: table-cell;
+  padding: 1rem 0.5rem;
+  text-align: center;
+  vertical-align: middle;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.col-name {
+  text-align: left;
+}
+
+.qty-field {
+  width: 5rem;
+}

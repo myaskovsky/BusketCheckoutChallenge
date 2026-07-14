@@ -1,0 +1,26 @@
+<div class="cell col-name" data-testid="line-product-name">{{ item().product.name }}</div>
+
+<div class="cell col-qty">
+  <mat-form-field appearance="outline" class="qty-field" subscriptSizing="dynamic">
+    <mat-select
+      [value]="item().quantity"
+      (selectionChange)="onQuantityChange($event.value)"
+      [attr.aria-label]="'Quantity for ' + item().product.name"
+      data-testid="quantity-select"
+    >
+      @for (option of quantities(); track option) {
+        <mat-option [value]="option">{{ option }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<div class="cell" data-testid="line-unit-price">{{ item().product.price | currency }}</div>
+
+<div class="cell" data-testid="line-total">{{ lineTotal() | currency }}</div>
+
+<div class="cell">
+  <button class="btn btn-danger" type="button" (click)="removeAll.emit()" data-testid="remove-all">
+    Remove All
+  </button>
+</div>

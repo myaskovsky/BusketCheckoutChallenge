@@ -1,0 +1,31 @@
+<div class="product-row" [attr.data-testid]="'product-card-' + product().sku">
+  <div class="name">{{ product().name }}</div>
+  <div class="description">{{ product().description }}</div>
+  <div class="price">{{ product().price | currency }}</div>
+
+  <span
+    class="add-btn-wrap"
+    [matTooltip]="limitMessage()"
+    [matTooltipDisabled]="!atLimit()"
+    data-testid="limit-tooltip"
+  >
+    <button
+      class="btn btn-neutral"
+      type="button"
+      [disabled]="atLimit()"
+      (click)="add.emit()"
+      data-testid="add-to-basket"
+    >
+      Add to Basket
+    </button>
+  </span>
+  <button
+    class="btn btn-danger"
+    type="button"
+    [disabled]="!inBasket()"
+    (click)="remove.emit()"
+    data-testid="remove-from-basket"
+  >
+    Remove from Basket
+  </button>
+</div>

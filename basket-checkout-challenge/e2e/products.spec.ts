@@ -11,13 +11,11 @@ test.describe('Products page', () => {
     await expect(page.locator('app-product-card')).toHaveCount(6);
   });
 
-  test('adding a product updates its quantity and the basket summary', async ({ page }) => {
-    const kettle = card(page, PRODUCTS.kettle.sku);
-    await expect(kettle.getByTestId('product-quantity')).toHaveText('In basket: 0');
+  test('adding a product updates the basket summary', async ({ page }) => {
+    await expect(page.getByTestId('basket-summary-items')).toContainText('0 items');
 
     await addToBasket(page, PRODUCTS.kettle.sku, 2);
 
-    await expect(kettle.getByTestId('product-quantity')).toHaveText('In basket: 2');
     await expect(page.getByTestId('basket-summary-items')).toContainText('2 items');
     await expect(page.getByTestId('basket-summary-total')).toContainText('84.00');
   });
@@ -27,10 +25,10 @@ test.describe('Products page', () => {
     await expect(grinder.getByTestId('remove-from-basket')).toBeDisabled();
 
     await addToBasket(page, PRODUCTS.grinder.sku, 2);
-    await expect(grinder.getByTestId('product-quantity')).toHaveText('In basket: 2');
+    await expect(page.getByTestId('basket-summary-items')).toContainText('2 items');
 
     await grinder.getByTestId('remove-from-basket').click();
-    await expect(grinder.getByTestId('product-quantity')).toHaveText('In basket: 1');
+    await expect(page.getByTestId('basket-summary-items')).toContainText('1 item');
     await expect(grinder.getByTestId('remove-from-basket')).toBeEnabled();
   });
 
@@ -38,11 +36,13 @@ test.describe('Products page', () => {
     const grinder = card(page, PRODUCTS.grinder.sku); //  limit 3
     await addToBasket(page, PRODUCTS.grinder.sku, PRODUCTS.grinder.limit);
 
-    await expect(grinder.getByTestId('product-quantity')).toHaveText(
-      `In basket: ${PRODUCTS.grinder.limit}`,
+    await expect(page.getByTestId('basket-summary-items')).toContainText(
+      `${PRODUCTS.grinder.limit} items`,
     );
     await expect(grinder.getByTestId('add-to-basket')).toBeDisabled();
-    await expect(grinder.getByTestId('limit-note')).toHaveText(
+
+    await grinder.getByTestId('limit-tooltip').hover();
+    await expect(page.getByRole('tooltip')).toHaveText(
       `Limit of ${PRODUCTS.grinder.limit} reached`,
     );
   });

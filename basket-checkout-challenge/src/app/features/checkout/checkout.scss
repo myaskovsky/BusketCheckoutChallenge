@@ -1,0 +1,108 @@
+:host {
+  display: block;
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.topnav {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 1rem;
+}
+
+h1 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 1.5rem 0 0.5rem;
+}
+
+.table-wrap {
+  display: flex;
+  justify-content: center;
+  margin: 1.5rem 0;
+}
+
+.checkout-table {
+  display: table;
+  width: 100%;
+}
+
+.thead {
+  display: table-row;
+}
+
+.th {
+  display: table-cell;
+  padding: 0.5rem;
+  text-align: center;
+  text-transform: uppercase;
+  background: #f3f4f6;
+  border-bottom: 1px solid #e5e7eb;
+  font-weight: 600;
+}
+
+.th.col-name {
+  text-align: left;
+}
+
+.grand-total {
+  display: flex;
+  justify-content: flex-end;
+  padding: 2rem;
+  font-size: 1rem;
+}
+
+.grand-total span {
+  margin-left: 0.35rem;
+  font-weight: 600;
+}
+
+.payment {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.card-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.card-error {
+  color: #dc2626;
+  font-size: 0.75rem;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  width: 100%;
+  margin-top: 1.5rem;
+}
+
+.empty,
+.confirmation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+.confirmation .check {
+  font-size: 2.5rem;
+  line-height: 1;
+  color: #16a34a;
+}
+
+.confirmation h2 {
+  margin: 0;
+}
