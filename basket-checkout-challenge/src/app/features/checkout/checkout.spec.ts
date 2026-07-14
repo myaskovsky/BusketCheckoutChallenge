@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
-import { BasketStore } from '@app/core/state';
+import { BasketService } from '@app/core/state';
 import { Product } from '@app/shared/models';
 import { Checkout } from './checkout';
 
@@ -34,7 +34,7 @@ async function typeCard(fixture: ComponentFixture<Checkout>, value: string): Pro
 
 describe('Checkout', () => {
   let fixture: ComponentFixture<Checkout>;
-  let store: InstanceType<typeof BasketStore>;
+  let store: BasketService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -42,7 +42,7 @@ describe('Checkout', () => {
       providers: [provideRouter([]), provideNoopAnimations()],
     }).compileComponents();
 
-    store = TestBed.inject(BasketStore);
+    store = TestBed.inject(BasketService);
     store.clear();
 
     fixture = TestBed.createComponent(Checkout);
@@ -72,7 +72,6 @@ describe('Checkout', () => {
     store.add(product);
     await fixture.whenStable();
 
-    // 16 digits grouped in fours = "0000 0000 0000 0000" = 19 characters.
     expect(cardInput(fixture).maxLength).toBe(19);
   });
 
@@ -83,7 +82,6 @@ describe('Checkout', () => {
     await typeCard(fixture, '4242424242424242');
     expect(cardInput(fixture).value).toBe('4242 4242 4242 4242');
 
-    // Non-digits are stripped and the value is capped at 16 digits.
     await typeCard(fixture, '4242-4242-4242-4242-9999');
     expect(cardInput(fixture).value).toBe('4242 4242 4242 4242');
   });

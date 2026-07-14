@@ -2,9 +2,9 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
-import { BasketStore } from '@app/core/state';
+import { BasketService } from '@app/core/state';
 import { Product } from '@app/shared/models';
-import { ProductCard } from './components/product-card';
+import { ProductCard } from './components/product-card/product-card';
 import { ProductsService } from './services/products.service';
 
 @Component({
@@ -16,7 +16,7 @@ import { ProductsService } from './services/products.service';
 })
 export class ProductList {
   private readonly productsService = inject(ProductsService);
-  protected readonly basket = inject(BasketStore);
+  protected readonly basket = inject(BasketService);
 
   protected readonly products = this.productsService.products;
 

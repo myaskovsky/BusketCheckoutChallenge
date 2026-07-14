@@ -44,11 +44,11 @@
     <form class="payment" (submit)="placeOrder(); $event.preventDefault()">
       <div class="card-row">
         <label for="card-number">Input Your Card Number</label>
-        <app-card-number-input [formField]="cardField" />
+        <app-card-number-input [formField]="cardField" [invalid]="showCardError()" />
       </div>
       @if (showCardError()) {
         <span id="card-error" class="card-error" role="alert" data-testid="card-error">
-          {{ cardField().errors()[0].message }}
+          {{ cardErrorMessage() }}
         </span>
       }
 

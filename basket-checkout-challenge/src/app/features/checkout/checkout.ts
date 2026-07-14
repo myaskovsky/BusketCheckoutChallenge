@@ -1,13 +1,11 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { FormField, form, maxLength, pattern, required, submit } from '@angular/forms/signals';
+import { form, FormField, pattern, required } from '@angular/forms/signals';
 
-import { BasketStore } from '@app/core/state';
-import { CheckoutItem } from './components/checkout-item';
-import { CardNumberInput } from './components/card-number-input';
-
-const CARD_DIGITS = 16;
+import { BasketService } from '@app/core/state';
+import { CheckoutItem } from './components/checkout-item/checkout-item';
+import { CardNumberInput } from './components/card-number-input/card-number-input';
 
 @Component({
   selector: 'app-checkout',
@@ -17,25 +15,32 @@ const CARD_DIGITS = 16;
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Checkout {
-  protected readonly basket = inject(BasketStore);
+  protected readonly basket = inject(BasketService);
   protected readonly orderPlaced = signal(false);
 
-  private readonly payment = signal({ cardNumber: '' });
-  protected readonly paymentForm = form(this.payment, (path) => {
-    required(path.cardNumber, { message: 'Enter your card number' });
-    maxLength(path.cardNumber, CARD_DIGITS, { message: 'Card number must be 16 digits' });
-    pattern(path.cardNumber, /^\d{16}$/, { message: 'Card number must be 16 digits' });
+  private readonly card = signal('');
+  protected readonly cardField = form(this.card, (path) => {
+    required(path, { message: 'Enter your card number' });
+    pattern(path, /^\d{16}$/, { message: 'Card number must be 16 digits' });
   });
 
-  protected readonly cardField = this.paymentForm.cardNumber;
+  protected readonly showCardError = computed(
+    () => this.cardField().touched() && this.cardField().invalid(),
+  );
 
-  protected readonly showCardError = computed(() => {
-    const state = this.cardField();
-    return state.touched() && state.invalid();
+  protected readonly cardErrorMessage = computed(() => {
+    const errors = this.cardField().errors();
+    if (errors.some((error) => error.kind === 'required')) {
+      return 'Enter your card number';
+    }
+    if (errors.some((error) => error.kind === 'pattern')) {
+      return 'Card number must be 16 digits';
+    }
+    return '';
   });
 
   protected readonly canCheckout = computed(
-    () => !this.basket.isEmpty() && this.paymentForm().valid(),
+    () => !this.basket.isEmpty() && this.cardField().valid(),
   );
 
   protected updateQuantity(sku: string, quantity: number): void {
@@ -47,9 +52,11 @@ export class Checkout {
   }
 
   protected placeOrder(): void {
-    submit(this.paymentForm, async () => {
-      this.orderPlaced.set(true);
-      this.basket.clear();
-    });
+    this.cardField().markAsTouched();
+    if (this.cardField().invalid() || this.basket.isEmpty()) {
+      return;
+    }
+    this.orderPlaced.set(true);
+    this.basket.clear();
   }
 }

@@ -33,7 +33,7 @@ test.describe('Products page', () => {
   });
 
   test('enforces the per-product basket limit', async ({ page }) => {
-    const grinder = card(page, PRODUCTS.grinder.sku); //  limit 3
+    const grinder = card(page, PRODUCTS.grinder.sku);
     await addToBasket(page, PRODUCTS.grinder.sku, PRODUCTS.grinder.limit);
 
     await expect(page.getByTestId('basket-summary-items')).toContainText(
@@ -41,9 +41,6 @@ test.describe('Products page', () => {
     );
     await expect(grinder.getByTestId('add-to-basket')).toBeDisabled();
 
-    // The pointer already sits on the Add button after the clicks above, so a
-    // plain hover fires no fresh mouseenter. Dispatch it directly on the wrapper
-    // to open the Material tooltip (which has no role="tooltip", hence the class).
     await grinder.getByTestId('limit-tooltip').dispatchEvent('mouseenter');
     await expect(page.locator('.mat-mdc-tooltip')).toHaveText(
       `Limit of ${PRODUCTS.grinder.limit} reached`,

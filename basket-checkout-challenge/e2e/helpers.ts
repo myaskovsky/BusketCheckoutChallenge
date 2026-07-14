@@ -1,7 +1,5 @@
 import { Page } from '@playwright/test';
 
-// Helpers and fixtures for the e2e suite
-
 export const VALID_CARD = '4242424242424242';
 
 export const PRODUCTS = {

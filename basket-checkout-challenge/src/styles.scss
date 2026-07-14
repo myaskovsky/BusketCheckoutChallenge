@@ -24,9 +24,6 @@ body {
   height: 100%;
 }
 
-// Small set of shared button primitives mirroring the example's Tailwind
-// look (blue = primary, red = destructive, gray = neutral). Kept intentionally
-// tiny so both pages can share them without pulling in Angular Material.
 .btn {
   display: inline-block;
   padding: 0.5rem;

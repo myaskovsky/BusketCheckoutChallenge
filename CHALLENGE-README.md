@@ -26,14 +26,11 @@ AI was used as a helper for writing unit and e2e tests.
 
 ### Why I used AI
 
-I used AI to double check which unit test cases would be useful for the NgRx basket
-signal store, its selectors, and the card-number validation. The goal was to avoid
-missing simple edge cases such as basket limits, removing the last item, and invalid
-card number formats.
+The goal was to avoid missing simple edge cases such as basket limits, removing the last item, and invalid card number formats.
 
 ### Prompt used
 
-I am working on a small Angular and NgRx Signal Store shopping basket challenge.
+I am working on a small Angular shopping basket challenge.
 
 Please help me write practical Vitest unit tests for the existing logic:
 
@@ -49,7 +46,7 @@ Focus on useful edge cases:
 - totals should be calculated from quantity multiplied by price
 - invalid card numbers should be rejected
 
-Please also help me write Playwright e2e tests covering the product-list and
+Also help me write Playwright e2e tests covering the product-list and
 checkout flows:
 
 - adding and removing products updates the quantity and basket summary

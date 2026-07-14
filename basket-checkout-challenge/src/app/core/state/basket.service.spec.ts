@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { Product } from '@app/shared/models';
-import { BasketStore } from './basket.store';
+import { BasketService } from './basket.service';
 
 const kettle: Product = {
   sku: 'CRD-001',
@@ -19,11 +19,11 @@ const mug: Product = {
   basketLimit: 5,
 };
 
-describe('BasketStore', () => {
-  let store: InstanceType<typeof BasketStore>;
+describe('BasketService', () => {
+  let store: BasketService;
 
   beforeEach(() => {
-    store = TestBed.inject(BasketStore);
+    store = TestBed.inject(BasketService);
   });
 
   it('starts empty', () => {
@@ -82,9 +82,9 @@ describe('BasketStore', () => {
   });
 
   it('totals across multiple products', () => {
-    store.add(kettle); // 40
-    store.add(mug);    // 10
-    store.add(mug);    // 10
+    store.add(kettle);
+    store.add(mug);
+    store.add(mug);
 
     expect(store.totalItems()).toBe(3);
     expect(store.totalCost()).toBe(60);

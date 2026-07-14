@@ -1,6 +1,6 @@
 # Basket & Checkout
 
-A small two-view shopping app built with Angular and NgRx. Products are loaded
+A small two-view shopping app built with Angular. Products are loaded
 from static mock data; a shopping basket is kept in a shared store and can be
 managed and checked out.
 
@@ -23,7 +23,6 @@ npm run lint       # ESLint
 ## Stack
 
 - Angular 21, standalone components, zoneless change detection, all `OnPush`.
-- [`@ngrx/signals`](https://ngrx.io/guide/signals) signal store for basket state.
 - Angular Material for the UI.
 - Signal forms for the card-number validation.
 - Product data is served as a static asset (`public/products.json`) and read

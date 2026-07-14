@@ -14,13 +14,13 @@ test.describe('Checkout page', () => {
 
   test('changing quantity updates the line total and grand total', async ({ page }) => {
     await page.goto('/products');
-    await addToBasket(page, PRODUCTS.kettle.sku, 1); // $42.00
+    await addToBasket(page, PRODUCTS.kettle.sku, 1);
     await page.getByTestId('proceed-to-checkout').click();
 
     const line = page.getByTestId(`checkout-item-${PRODUCTS.kettle.sku}`);
     await expect(line.getByTestId('line-total')).toContainText('42.00');
 
-    await setQuantity(page, PRODUCTS.kettle.sku, 3); // 3 × $42.00 = $126.00
+    await setQuantity(page, PRODUCTS.kettle.sku, 3);
     await expect(line.getByTestId('line-total')).toContainText('126.00');
     await expect(page.getByTestId('grand-total')).toContainText('126.00');
   });
@@ -72,7 +72,6 @@ test.describe('Checkout page', () => {
 
     await page.getByTestId('continue-shopping').click();
     await expect(page).toHaveURL(/\/products$/);
-    // Order placement clears the in-memory basket:)
     await expect(page.getByTestId('basket-summary-items')).toContainText('Basket items: 0');
   });
 });

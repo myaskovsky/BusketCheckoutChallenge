@@ -6,6 +6,7 @@ import { MatTooltip } from '@angular/material/tooltip';
 import { Product } from '@app/shared/models';
 import { ProductCard } from './product-card';
 
+
 const product: Product = {
   sku: 'CRD-001',
   name: 'Cascade Kettle',

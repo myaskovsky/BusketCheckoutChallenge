@@ -32,8 +32,6 @@
 .add-btn-wrap {
   display: inline-flex;
 
-  // A disabled button swallows pointer events, so let the wrapper receive the
-  // hover that triggers the tooltip.
   button:disabled {
     pointer-events: none;
   }

@@ -1,1 +1,1 @@
-export { BasketStore } from './basket.store';
+export { BasketService } from './basket.service';

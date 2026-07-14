@@ -1,8 +1,9 @@
 <input
   id="card-number"
   class="card-input"
-  [class.invalid]="showError()"
+  [class.invalid]="invalid()"
   [value]="display()"
+  [disabled]="disabled()"
   (input)="onInput($event)"
   (blur)="markTouched()"
   inputmode="numeric"

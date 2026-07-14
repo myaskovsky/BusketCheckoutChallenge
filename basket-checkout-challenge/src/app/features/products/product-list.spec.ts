@@ -4,7 +4,7 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { provideRouter } from '@angular/router';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
-import { BasketStore } from '@app/core/state';
+import { BasketService } from '@app/core/state';
 import { Product } from '@app/shared/models';
 import { ProductList } from './product-list';
 
@@ -16,7 +16,7 @@ const products: Product[] = [
 describe('ProductList', () => {
   let fixture: ComponentFixture<ProductList>;
   let httpMock: HttpTestingController;
-  let store: InstanceType<typeof BasketStore>;
+  let store: BasketService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -29,7 +29,7 @@ describe('ProductList', () => {
       ],
     }).compileComponents();
 
-    store = TestBed.inject(BasketStore);
+    store = TestBed.inject(BasketService);
     store.clear();
 
     fixture = TestBed.createComponent(ProductList);
