@@ -1,0 +1,44 @@
+[
+  {
+    "sku": "CRD-001",
+    "name": "Cascade Pour-Over Kettle",
+    "description": "Gooseneck kettle with a precision spout for a slow, controlled pour.",
+    "price": 42.0,
+    "basketLimit": 5
+  },
+  {
+    "sku": "CRD-002",
+    "name": "Burr Coffee Grinder",
+    "description": "Conical burr grinder with 18 grind settings from espresso to French press.",
+    "price": 89.5,
+    "basketLimit": 3
+  },
+  {
+    "sku": "CRD-003",
+    "name": "Double-Wall Glass Mug",
+    "description": "Insulated 350ml glass that keeps drinks hot without burning your hands.",
+    "price": 14.75,
+    "basketLimit": 10
+  },
+  {
+    "sku": "CRD-004",
+    "name": "House Blend Beans 1kg",
+    "description": "Medium roast with notes of cocoa and toasted almond. Whole bean.",
+    "price": 23.0,
+    "basketLimit": 8
+  },
+  {
+    "sku": "CRD-005",
+    "name": "Reusable Paper Filters",
+    "description": "Pack of 100 unbleached filters that fit most pour-over drippers.",
+    "price": 6.5,
+    "basketLimit": 12
+  },
+  {
+    "sku": "CRD-006",
+    "name": "Digital Coffee Scale",
+    "description": "0.1g resolution scale with a built-in timer for repeatable brews.",
+    "price": 34.99,
+    "basketLimit": 4
+  }
+]

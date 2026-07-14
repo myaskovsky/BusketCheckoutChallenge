@@ -1,0 +1,52 @@
+:host {
+  display: block;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.page-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.page-header h1 {
+  margin: 0;
+  font: var(--mat-sys-headline-medium);
+}
+
+.basket-summary {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.summary-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.checkout-cta {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1.5rem;
+}
+
+.status {
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.status.error {
+  color: var(--mat-sys-error);
+}

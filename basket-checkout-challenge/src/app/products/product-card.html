@@ -1,0 +1,39 @@
+<mat-card class="product" appearance="outlined" [attr.data-testid]="'product-card-' + product().sku">
+  <mat-card-header>
+    <mat-card-title>{{ product().name }}</mat-card-title>
+    <mat-card-subtitle>{{ product().price | currency }}</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <p class="description">{{ product().description }}</p>
+  </mat-card-content>
+
+  <mat-card-actions class="actions">
+    <span class="quantity" aria-live="polite" data-testid="product-quantity">In basket: {{ quantity() }}</span>
+
+    <div class="buttons">
+      <button
+        matButton
+        type="button"
+        [disabled]="!inBasket()"
+        (click)="remove.emit()"
+        data-testid="remove-from-basket"
+      >
+        Remove Basket
+      </button>
+      <button
+        matButton="filled"
+        type="button"
+        [disabled]="atLimit()"
+        (click)="add.emit()"
+        data-testid="add-to-basket"
+      >
+        Add to Basket
+      </button>
+    </div>
+  </mat-card-actions>
+
+  @if (atLimit()) {
+    <p class="limit-note" data-testid="limit-note">Limit of {{ product().basketLimit }} reached</p>
+  }
+</mat-card>
